@@ -16,15 +16,15 @@
 <body style="background: #f5f5f5">
 
 
-<div class="container ">
+<div class="container animate__animated animate__bounceInDown">
     <br />
-    <h1 style="font-family:'Lucida Console'" class="text-center container animate__animated animate__bounce"> UAP Students Management System </h1>
+    <h1 style="font-family:'Lucida Console'" class="text-center "> UAP Students Management System </h1>
     <hr/>
     <br/>
     <div class="row">
 
         <div class="col-md-4 mr-auto col-md-4 ml-auto">
-            <h3 style="font-family:'Lucida Console'" class="text-center container animate__animated animate__bounce">Admin Login Form </h3>
+            <h3 style="font-family:'Lucida Console'" class="text-center ">Admin Login Form </h3>
             <br/>
             <form action="login.php" method="POST">
 
@@ -42,6 +42,9 @@
                 </div><a class="btn btn-outline-dark" href="../">Back</a>
 
             </form>
+            <br/>
+            <br/>
+            <hr/>
         </div>
     </div>
 </div>

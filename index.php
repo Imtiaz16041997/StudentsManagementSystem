@@ -12,12 +12,13 @@
 </head>
 <body>
 
-<div class="container animate__animated animate__zoomIn">
+<div class="container animate__animated animate__bounceInDown">
     <br />
     <a class="btn btn-outline-primary float-right"  href="admin/login.php">Login</a>
     <br />
     <br />
     <h1 class="text-center"> Welcome to UAP Students Management System </h1>
+    <hr/>
     <br>
     <div class="row">
         <br/>
