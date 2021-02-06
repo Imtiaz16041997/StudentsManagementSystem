@@ -1,4 +1,5 @@
 <?php
+require_once './dbcon.php';
     if(isset($_POST['registration']))
     {
         $name =$_POST['name'];
@@ -53,9 +54,68 @@
             $input_error['c_password'] = "Confirm Password Field is Required";
         }
 
+        if(count($input_error) == 0) {
+
+            //Email Exists and Email Check
 
 
+            if (!empty($link)) {
+                $email_check = mysqli_query($link, "SELECT * FROM `users` WHERE `email`= '$email';");
+                if (mysqli_num_rows($email_check) == 0) {
+
+                    $username_check = mysqli_query($link, "SELECT * FROM `users` WHERE `username`= '$username';");
+                    if (mysqli_num_rows($username_check) == 0) {
+
+
+                        $name_check = mysqli_query($link, "SELECT * FROM `users` WHERE `name`= '$name';");
+                        if (mysqli_num_rows($name_check) == 0) {
+
+                            $reg_id_check = mysqli_query($link, "SELECT * FROM `users` WHERE `reg_id`= '$reg_id';");
+                            if (mysqli_num_rows($reg_id_check) == 0) {
+
+                                if(strlen($reg_id) == 8 ){
+
+                                }else{
+                                    $reg_id_l = "RegID should not be more than 8 digits";
+                                }
+
+                            }
+
+                            if (strlen($name) > 8) {
+
+                            } else {
+                                $name_l = "Name should be more than 8 characters";
+                            }
+                        } else {
+                            $name_error = "This name already Exists";
+                        }
+
+                        if (strlen($username) >= 7) {
+
+                            if (strlen($password) > 7) {
+
+                                if($password == $c_password){
+
+                                }else{
+                                    $password_not_matched = "Password Not Matched!";
+                                }
+
+                            } else {
+                                $password_l = "Password should be more than 8 Characters";
+                            }
+                        } else {
+                            $username_l = "Username should not be more than 8 Characters";
+                        }
+                    } else {
+                        $username_error = "This Name Already Exists";
+                    }
+
+                } else {
+                    $email_error = "This Email Address Already Exists";
+                }
+            }
         }
+    }
 ?>
 
 <!doctype html>
@@ -90,6 +150,9 @@
                                 <input class="form-control" id="name" type="text" name="name" placeholder="Enter your Name" value="<?php if(isset($name)){echo $name;} ?>"/>
                             </div>
                             <label class="error"><?php if(isset($input_error['name'])){echo $input_error['name'];} ?></label>
+                            <!-- Name Exist check -->
+                            <label class="error"><?php if(isset($name_error)){ echo $name_error;} ?></label>
+                            <label class="error"><?php if(isset($name_l)){ echo $name_l;} ?></label>
                         </div>
 
                         <div class="form-group row ">
@@ -98,14 +161,19 @@
                                 <input class="form-control" id="username" type="text" name="username" placeholder="Enter your UserName" value="<?php if(isset($username)){echo $username;} ?>"/>
                             </div>
                             <label class="error"><?php if(isset($input_error['username'])){echo $input_error['username'];} ?></label>
+                            <!-- USerName Exist check -->
+                            <label class="error"><?php if(isset($username_error)){ echo $username_error;} ?></label>
+                            <label class="error"><?php if(isset($username_l)){ echo $username_l;} ?></label>
+
                         </div>
 
                         <div class="form-group row">
                             <label for="reg_id" class="text-center control-label col-sm-1">REG_ID</label>
                             <div class="col-sm-4">
-                                <input class="form-control" id="reg_id" type="number" pattern="[0-9]{8}" name="reg_id" placeholder="Enter your Reg_ID"/>
+                                <input class="form-control" id="reg_id" type="number" pattern="[0-9]{8}" name="reg_id" placeholder="Enter your Reg_ID" value="<?php if(isset($reg_id)){echo $reg_id;} ?>" />
                             </div>
                             <label class="error"><?php if(isset($input_error['reg_id'])){echo $input_error['reg_id'];} ?></label>
+                            <label class="error"><?php if(isset($reg_id_l)){ echo $reg_id_l;} ?></label>
                         </div>
 
                         <div class="form-group row">
@@ -132,6 +200,8 @@
                                     <option value=""> Select </option>
                                     <option value="1"> 1st </option>
                                     <option value="2"> 2nd </option>
+                                    <option value="3"> 3rd </option>
+                                    <option value="4"> 4th </option>
                                 </select>
                             </div>
                             <label class="error"><?php if(isset($input_error['year'])){echo $input_error['year'];} ?></label>
@@ -157,6 +227,9 @@
 
                             </div>
                             <label class="error"><?php if(isset($input_error['email'])){echo $input_error['email'];} ?></label>
+                                                                    <!--Email Exist check -->
+                            <label class="error"><?php if(isset($email_error)){ echo $email_error;} ?></label>
+
                         </div>
 
                         <div class="form-group row">
@@ -166,6 +239,7 @@
 
                             </div>
                             <label class="error"><?php if(isset($input_error['password'])){echo $input_error['password'];} ?></label>
+                            <label class="error"><?php if(isset($password_l)){echo $password_l;} ?></label>
                         </div>
 
                         <div class="form-group row">
@@ -175,6 +249,7 @@
 
                             </div>
                             <label class="error"><?php if(isset($input_error['c_password'])){echo $input_error['c_password'];} ?></label>
+                            <label class="error"><?php if(isset($password_not_matched)){echo $password_not_matched;} ?></label>
                         </div>
 
                         <div class="form-group row">
